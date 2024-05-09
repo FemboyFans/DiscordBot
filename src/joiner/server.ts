@@ -9,14 +9,13 @@ import Logger from "@uwu-codes/logger";
 import morgan from "morgan";
 import { createHash } from "node:crypto";
 
-const viewsDir = new URL("views", import.meta.url).pathname;
 const app = express()
     .engine("hbs", create({
         extname:       "hbs",
         defaultLayout: false
     }).engine)
     .set("view engine", "hbs")
-    .set("views", viewsDir)
+    .set("views", config.viewsDir)
     .set("view options", { pretty: true })
     .set("trust proxy", true)
     .set("x-powered-by", false)

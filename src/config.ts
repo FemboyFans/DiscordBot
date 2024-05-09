@@ -32,6 +32,7 @@ const config = {
     staffCategories:   env("STAFF_CATEGORIES")?.split(",") || [],
     safeChannels:      env("SAFE_CHANNELS")?.split(",") || [],
     encryptionKey:     env("ENCRYPTION_KEY", true),
-    encryptionSalt:    env("ENCRYPTION_SALT", true)
+    encryptionSalt:    env("ENCRYPTION_SALT", true),
+    viewsDir:          new URL(import.meta.url.endsWith(".ts") ? "../joiner/views" : "../../src/joiner/views", import.meta.url).pathname
 };
 export default config;
