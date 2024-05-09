@@ -1,0 +1,29 @@
+{
+  "discord": {
+    "token": "",
+    "id": "",
+    "secret": ""
+  },
+  "redis": "redis://localhost:34519/1",
+  "redisChannels": {
+    "tickets": "ticket_updates"
+  },
+  "guildID": "",
+  "roles": {
+    "admin": ""
+  },
+  "joinerPort": 3004,
+  "joinerURL": "http://localhost:3004",
+  "joinerSecret": "super_secret_for_url_discord",
+  "joinerChannelID": "",
+  "auditLogChannelID": "",
+  "eventChannelID": "",
+  "ticketChannelID": "",
+  "baseURL": "http://localhost:3001",
+  "cdnHost": "localhost:3001",
+  "blacklistedTags": [],
+  "staffCategories": [],
+  "safeChannels": [],
+  "encryptionKey": "",
+  "encryptionSalt": ""
+}
