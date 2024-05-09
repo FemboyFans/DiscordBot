@@ -19,7 +19,7 @@ const config = {
     roles:   {
         admin: env("ADMIN_ROLE", true)
     },
-    joinerPort:        env("JOINER_PORT") || 3004,
+    joinerPort:        Number(env("JOINER_PORT") || 3004),
     joinerURL:         env("JOINER_URL", true),
     joinerSecret:      env("JOINER_SECRET", true),
     joinerChannelID:   env("JOINER_CHANNEL_ID", true),
