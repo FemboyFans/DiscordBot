@@ -6,7 +6,7 @@ export const ucwords = (str: string) => str.replaceAll(/\b\w/g, char => char.toU
 export const normalizeName = (str: string) => str.replaceAll("_", " ");
 
 export async function idToName(...ids: Array<number>) {
-    const data = await fetch(`${config.baseURL}/users.json?search[id]=${ids.join(",")}`)
+    const data = await fetch(`${config.fetchURL}/users.json?search[id]=${ids.join(",")}`)
         .then(async r => r.json() as Promise<Array<{ id: number; name: string; }>>)
         .catch(err => {
             Logger.getLogger("idToName").error(err);
@@ -33,7 +33,7 @@ export const wikiLinkRegex = /\[\[([\S ]+?)]]/gi;
 export const postSearchRegex = /{{([\S ]+?)}}/gi;
 
 export async function getPost(id: number) {
-    return fetch(`${config.baseURL}/posts/${id}.json`)
+    return fetch(`${config.fetchURL}/posts/${id}.json`)
         .then(r => r.json() as Promise<{ id: number; rating: "s" | "q" | "e"; tags: Record<string, Array<string>>; }>)
         .then(data => ({ rating: data.rating, tags: Object.entries(data.tags).flatMap(t => t[1]) }))
         .catch(err => {
@@ -43,7 +43,7 @@ export async function getPost(id: number) {
 }
 
 export async function getPostByMD5(md5: string) {
-    return fetch(`${config.baseURL}/posts.json?md5=${md5}`)
+    return fetch(`${config.fetchURL}/posts.json?md5=${md5}`)
         .then(r => r.json() as Promise<Array<{ id: number; rating: "s" | "q" | "e"; tags: Record<string, Array<string>>; }>>)
         .then(([data]) => ({ id: data.id, rating: data.rating, tags: Object.entries(data.tags).flatMap(t => t[1]) }))
         .catch(err => {

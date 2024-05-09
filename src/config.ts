@@ -27,6 +27,7 @@ const config = {
     eventChannelID:    env("EVENT_CHANNEL_ID", true),
     ticketChannelID:   env("TICKET_CHANNEL_ID", true),
     baseURL:           env("BASE_URL", true),
+    fetchURL:          env("FETCH_URL", true),
     cdnHost:           env("CDN_HOST", true),
     blacklistedTags:   env("BLACKLISTED_TAGS")?.split(",") || [],
     staffCategories:   env("STAFF_CATEGORIES")?.split(",") || [],
