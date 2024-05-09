@@ -1,35 +1,37 @@
-import { readFile } from "node:fs/promises";
-
-interface Config {
-    auditLogChannelID: string;
-    baseURL: string;
-    blacklistedTags: Array<string>;
-    cdnHost: string;
+const env = <R extends boolean = false>(key: string, required?: R): R extends true ? string : string | undefined => {
+    const v = process.env[key];
+    if (!v && required) {
+        throw new Error(`Missing required environment variable: ${key}`);
+    }
+    return v as never;
+};
+const config = {
     discord: {
-        id: string;
-        secret: string;
-        token: string;
-    };
-    encryptionKey: string;
-    encryptionSalt: string;
-    eventChannelID: string;
-    guildID: string;
-    joinerChannelID: string;
-    joinerPort: number;
-    joinerSecret: string;
-    joinerURL: string;
-    redis: string;
+        token:  env("DISCORD_TOKEN", true),
+        id:     env("DISCORD_ID", true),
+        secret: env("DISCORD_SECRET", true)
+    },
+    redis:         env("REDIS_URL") || "redis://redis/1",
     redisChannels: {
-        tickets: string;
-    };
-    roles: {
-        admin: string;
-    };
-    safeChannels: Array<string>;
-    staffCategories: Array<string>;
-    ticketChannelID: string;
-}
-
-const file = process.env.CONFIG_FILE || new URL(import.meta.url.endsWith(".ts") ? "../config.json" : "../../config.json", import.meta.url).pathname;
-const config = await readFile(file, "utf8").then(JSON.parse) as Config;
+        tickets: env("REDIS_CHANNEL_TICKETS") || "ticket_updates"
+    },
+    guildID: env("GUILD_ID", true),
+    roles:   {
+        admin: env("ADMIN_ROLE", true)
+    },
+    joinerPort:        env("JOINER_PORT") || 3004,
+    joinerURL:         env("JOINER_URL", true),
+    joinerSecret:      env("JOINER_SECRET", true),
+    joinerChannelID:   env("JOINER_CHANNEL_ID", true),
+    auditLogChannelID: env("AUDIT_LOG_CHANNEL_ID", true),
+    eventChannelID:    env("EVENT_CHANNEL_ID", true),
+    ticketChannelID:   env("TICKET_CHANNEL_ID", true),
+    baseURL:           env("BASE_URL", true),
+    cdnHost:           env("CDN_HOST", true),
+    blacklistedTags:   env("BLACKLISTED_TAGS")?.split(",") || [],
+    staffCategories:   env("STAFF_CATEGORIES")?.split(",") || [],
+    safeChannels:      env("SAFE_CHANNELS")?.split(",") || [],
+    encryptionKey:     env("ENCRYPTION_KEY", true),
+    encryptionSalt:    env("ENCRYPTION_SALT", true)
+};
 export default config;
