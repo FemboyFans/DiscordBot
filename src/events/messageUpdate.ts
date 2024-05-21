@@ -6,19 +6,29 @@ import config from "../config.js";
 import { EmbedBuilder } from "@oceanicjs/builders";
 import type { JSONMessage } from "oceanic.js";
 
-export default new ClientEvent("messageUpdate", async function(msg) {
+export default new ClientEvent("messageUpdate", async function(msg, oldMessage) {
     if (!msg.guildID || msg.author.id === this.user.id) {
         return;
     }
-    const old = await Redis.get(`discord-messages:${msg.id}`);
-    await Redis.set(`discord-messages:${msg.id}`, EncryptionHandler.encrypt(JSON.stringify(msg.toJSON())));
 
-    if (msg.inCachedGuildChannel()) {
-        await handleLinks(msg);
+    if (!oldMessage) {
+        const old = await Redis.get(`discord-messages:${msg.id}`);
+        if (old) {
+            oldMessage = JSON.parse(EncryptionHandler.decrypt(old)) as JSONMessage;
+        }
     }
 
-    if (old) {
-        const { attachments, content } = JSON.parse(EncryptionHandler.decrypt(old)) as JSONMessage;
+    await Redis.set(`discord-messages:${msg.id}`, EncryptionHandler.encrypt(JSON.stringify(msg.toJSON())));
+
+    if (oldMessage) {
+        if (msg.content === oldMessage.content && JSON.stringify(msg.attachments.toArray()) === JSON.stringify(oldMessage.attachments)) {
+            return;
+        }
+
+        if (msg.inCachedGuildChannel()) {
+            await handleLinks(msg);
+        }
+
         const embed = new EmbedBuilder()
             .setTitle("Edited Message")
             .setColor(0xFFFF00)
@@ -27,13 +37,13 @@ export default new ClientEvent("messageUpdate", async function(msg) {
             .addField("User", `<@${msg.author.id}>`, true)
             .addField("Message", msg.jumpLink, true);
 
-        if (msg.content !== content) {
-            embed.addField("Before", content.slice(0, 2000));
+        if (msg.content !== oldMessage.content) {
+            embed.addField("Before", oldMessage.content.slice(0, 2000));
             embed.addField("After", msg.content.slice(0, 2000));
         }
 
-        const addedAttachments = msg.attachments.toArray().filter(a => !attachments.some(att => att.id === a.id));
-        const removedAttachments = attachments.filter(att => !msg.attachments.toArray().some(a => a.id === att.id));
+        const addedAttachments = msg.attachments.toArray().filter(a => !oldMessage.attachments.some(att => att.id === a.id));
+        const removedAttachments = oldMessage.attachments.filter(att => !msg.attachments.toArray().some(a => a.id === att.id));
 
         if (addedAttachments.length !== 0) {
             embed.addField("Added Attachments", addedAttachments.map(a => `[${a.filename}](${a.url})`).join(", "));
