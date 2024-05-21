@@ -11,7 +11,7 @@ const config = {
         id:     env("DISCORD_ID", true),
         secret: env("DISCORD_SECRET", true)
     },
-    redis:         env("REDIS_URL") || "redis://redis/1",
+    redis:         env("REDIS_URL") || "redis://redis/2",
     redisChannels: {
         tickets: env("REDIS_CHANNEL_TICKETS") || "ticket_updates"
     },
@@ -26,6 +26,7 @@ const config = {
     auditLogChannelID: env("AUDIT_LOG_CHANNEL_ID", true),
     eventChannelID:    env("EVENT_CHANNEL_ID", true),
     ticketChannelID:   env("TICKET_CHANNEL_ID", true),
+    memberRoleID:      env("MEMBER_ROLE_ID", true),
     baseURL:           env("BASE_URL", true),
     fetchURL:          env("FETCH_URL", true),
     cdnHost:           env("CDN_HOST", true),

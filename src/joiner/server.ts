@@ -81,7 +81,7 @@ const app = express()
         const discordUser = await helper.getCurrentUser();
         await addUser(user_id, discordUser.id);
         try {
-            await helper.addGuildMember(config.guildID, discordUser.id, { nick: normalizeName(user_name) });
+            await helper.addGuildMember(config.guildID, discordUser.id, { nick: normalizeName(user_name), roles: [config.memberRoleID] });
             await helper.revokeToken({ clientID: config.discord.id, clientSecret: config.discord.secret })
                 .catch(err => Logger.getLogger("joiner").warn(`Failed to revoke token: ${err}`));
 
