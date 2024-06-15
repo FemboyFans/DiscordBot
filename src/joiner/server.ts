@@ -92,7 +92,7 @@ const app = express()
                 const messages: Record<number, string> = {
                     [JSONErrorCodes.TOO_MANY_GUILDS]:   "You are at the discord server limit. Try again after you have left some servers.",
                     [JSONErrorCodes.INVITES_DISABLED]:  "Joining our discord server is currently disabled. Try again at a later date.",
-                    [JSONErrorCodes.USER_BANNED]:       "You are either IP banned by discord (are you using a VPN?) or banned from the server. Server bans may be appealed by writing an email to admin@pawsmov.in.",
+                    [JSONErrorCodes.USER_BANNED]:       "You are either IP banned by discord (are you using a VPN?) or banned from the server. Server bans may be appealed by writing an email to admin@femboy.fan.",
                     [JSONErrorCodes.UNDER_MINIMUM_AGE]: "Could not add you to the server. Make sure you are able to access other NSFW-marked servers on your discord client."
                 };
                 if (messages[err.code]) {

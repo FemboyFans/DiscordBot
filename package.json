@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PawsMovin/DiscordBot.git"
+    "url": "git+https://github.com/FemboyFans/DiscordBot.git"
   },
   "author": "Donovan_DMC <hewwo@yiff.rocks>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PawsMovin/DiscordBot/issues"
+    "url": "https://github.com/FemboyFans/DiscordBot/issues"
   },
-  "homepage": "https://github.com/PawsMovin/DiscordBot#readme",
+  "homepage": "https://github.com/FemboyFans/DiscordBot#readme",
   "devDependencies": {
     "@swc/core": "^1.4.16",
     "@types/chai": "^4.3.16",
