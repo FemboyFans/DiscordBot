@@ -5,9 +5,10 @@ const replacements = [
     [/flag #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/posts/flags/${id}>`],
     [/note #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/notes/${id}>`],
     // TODO: post # catching " post" & "post" here
-    [/forum(?: ?post)? #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/forum_posts/${id}>`],
-    //  [/(?:forum )?topic #(\d+)\/p(\d+)/gi, (_match: string, id: string, page: string) => `<${config.baseURL}/forum_topics/${id}?page=${page}>`],
-    [/(?:forum )?topic #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/forum_topics/${id}>`],
+    [/forum(?: ?post)? #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/forums/posts/${id}>`],
+    //  [/(?:forum )?topic #(\d+)\/p(\d+)/gi, (_match: string, id: string, page: string) => `<${config.baseURL}/forums/topics/${id}?page=${page}>`],
+    [/(?:forum )?topic #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/forums/topics/${id}>`],
+    [/(?:forum )?category #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/forums/categories/${id}>`],
     [/comment #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/comments/${id}>`],
     [/dmail #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/dmails/${id}>`],
     [/pool #(\d+)/gi, (_match: string, id: string) => `<${config.baseURL}/pools/${id}>`],
