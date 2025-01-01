@@ -37,11 +37,11 @@ export async function ticketUpdate(data: TicketActionData) {
         WikiPage:  () => `Wiki page ${data.ticket.target}`
     }[data.ticket.model_type] || (() => `${data.ticket.model_type} report by ${data.ticket.user_name}`))();
     const embed = {
-        url:         `http://localhost:3001/tickets/${data.ticket.id}`,
+        url:         `${config.baseURL}/tickets/${data.ticket.id}`,
         title:       offender,
         description: data.ticket.reason.slice(0, 1000),
         author:      {
-            url:  `http://localhost:3001/users/${data.ticket.user_id}`,
+            url:  `${config.baseURL}/users/${data.ticket.user_id}`,
             name: data.ticket.user_name
         },
         color,
